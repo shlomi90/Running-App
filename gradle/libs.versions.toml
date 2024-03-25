@@ -1,17 +1,22 @@
 [versions]
 agp = "8.3.1"
+googleMaterial = "1.11.0"
+googleMaterialVersion = "1.12.0-alpha03"
 kotlin = "1.9.0"
-coreKtx = "1.10.1"
+coreKtx = "1.12.0"
 junit = "4.13.2"
 junitVersion = "1.1.5"
 espressoCore = "3.5.1"
 appcompat = "1.6.1"
-material = "1.10.0"
-activity = "1.8.0"
+material = "1.11.0"
+activity = "1.8.2"
 constraintlayout = "2.1.4"
 googleServices = "4.4.1"
 firebaseAuth = "22.3.1"
 firebaseDatabaseKtx = "20.3.1"
+materialVersion = "1.11.0"
+design = "28.0.0"
+supportAnnotations = "28.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -25,6 +30,11 @@ androidx-constraintlayout = { group = "androidx.constraintlayout", name = "const
 google-services = { group = "com.google.gms", name = "google-services", version.ref = "googleServices" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
 firebase-database-ktx = { group = "com.google.firebase", name = "firebase-database-ktx", version.ref = "firebaseDatabaseKtx" }
+material-v1120alpha03 = { module = "com.google.android.material:material", version.ref = "googleMaterialVersion" }
+material-v140 = { module = "com.google.android.material:material", version.ref = "materialVersion" }
+material-v150 = { module = "com.google.android.material:material", version.ref = "googleMaterial" }
+design = { group = "com.android.support", name = "design", version.ref = "design" }
+support-annotations = { group = "com.android.support", name = "support-annotations", version.ref = "supportAnnotations" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

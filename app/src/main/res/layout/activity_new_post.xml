@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@drawable/background">
+
+    <!-- EditText for Content -->
+    <EditText
+        android:id="@+id/editTextContent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:hint="Content"
+        android:inputType="textMultiLine"
+        android:minLines="5" />
+
+    <!-- Horizontal LinearLayout for Choose Time, Location, and Upload Photo -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <!-- Choose Time Button -->
+        <Button
+            android:id="@+id/buttonChooseTime"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="showTimePickerDialog"
+            android:text="Choose Time" />
+
+        <!-- Location Button -->
+        <Button
+            android:id="@+id/buttonLocation"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Location" />
+
+        <!-- Upload Photo Button -->
+        <Button
+            android:id="@+id/buttonUploadPhoto"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="uploadPhoto"
+            android:text="Upload Photo" />
+    </LinearLayout>
+
+    <!-- TextView for Response -->
+    <TextView
+        android:id="@+id/textViewResponse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="" />
+
+    <!-- Button for Post -->
+
+    <!-- Include Bottom Navigation View -->
+    <Button
+        android:id="@+id/buttonPost"
+        android:layout_width="159dp"
+        android:layout_height="82dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="16dp"
+        android:text="Post" />
+
+    <include
+        android:id="@+id/bottom_navigation"
+        layout="@layout/bottom_navigation_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
