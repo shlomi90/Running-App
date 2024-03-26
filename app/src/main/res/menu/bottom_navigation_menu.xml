@@ -15,7 +15,7 @@
 
         <!-- Home Button -->
         <item
-            android:id="@+id/home"
+            android:id="@+id/homep"
             android:icon="@drawable/ic_home"
             android:title="@string/home"/>
 

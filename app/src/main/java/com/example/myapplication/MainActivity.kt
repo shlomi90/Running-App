@@ -42,12 +42,14 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.posts -> {
+                    // Replace MainActivity with your desired activity for the "posts" button
                     val intent = Intent(this@MainActivity, MainActivity::class.java)
                     startActivity(intent)
                     finish()
                     true
                 }
-                R.id.home -> {
+                R.id.homep -> {
+                    // Always navigate to MainActivity when "home" button is clicked
                     val intent = Intent(this@MainActivity, MainActivity::class.java)
                     startActivity(intent)
                     finish()
@@ -56,6 +58,7 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
+
 
 
 
