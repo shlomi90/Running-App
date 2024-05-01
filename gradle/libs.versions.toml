@@ -17,6 +17,13 @@ firebaseDatabaseKtx = "20.3.1"
 materialVersion = "1.11.0"
 design = "28.0.0"
 supportAnnotations = "28.0.0"
+navigationRuntimeKtx = "2.7.7"
+picasso = "2.71828"
+maps = "18.0.0"
+places = "3.4.0"
+firebaseStorageKtx = "20.3.0"
+firebaseFirestoreKtx = "24.11.1"
+recyclerview = "1.3.2"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -35,6 +42,13 @@ material-v140 = { module = "com.google.android.material:material", version.ref =
 material-v150 = { module = "com.google.android.material:material", version.ref = "googleMaterial" }
 design = { group = "com.android.support", name = "design", version.ref = "design" }
 support-annotations = { group = "com.android.support", name = "support-annotations", version.ref = "supportAnnotations" }
+androidx-navigation-runtime-ktx = { group = "androidx.navigation", name = "navigation-runtime-ktx", version.ref = "navigationRuntimeKtx" }
+picasso= { group = "com.squareup.picasso", name = "picasso", version.ref = "picasso"}
+
+places = { group = "com.google.android.libraries.places", name = "places", version.ref = "places" }
+firebase-storage-ktx = { group = "com.google.firebase", name = "firebase-storage-ktx", version.ref = "firebaseStorageKtx" }
+firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestoreKtx" }
+androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

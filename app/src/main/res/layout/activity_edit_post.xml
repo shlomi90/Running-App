@@ -46,19 +46,19 @@
             android:layout_marginTop="8dp"
             android:fillViewport="true">
 
-        <!-- Post Content -->
-        <EditText
-            android:id="@+id/editTextContent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Content"
-            android:textColorHint="@color/white"
-            android:shadowColor="@color/white"
-            android:textColor="@color/white"
-            android:inputType="textMultiLine"
-            android:minLines="3"
-            android:padding="16dp"
-            android:background="@drawable/border_background"/>
+            <!-- Post Content -->
+            <EditText
+                android:id="@+id/editTextContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Content"
+                android:textColorHint="@color/white"
+                android:shadowColor="@color/white"
+                android:textColor="@color/white"
+                android:inputType="textMultiLine"
+                android:minLines="3"
+                android:padding="16dp"
+                android:background="@drawable/border_background"/>
 
         </ScrollView>
 
@@ -69,7 +69,6 @@
             android:layout_height="wrap_content"
             android:clickable="true"
             android:focusable="true"
-            android:onClick="selectLocation"
             android:background="@drawable/border_background"
             android:padding="16dp">
 
@@ -88,7 +87,6 @@
             android:layout_height="wrap_content"
             android:clickable="true"
             android:focusable="true"
-            android:onClick="selectTime"
             android:background="@drawable/border_background"
             android:padding="16dp">
 
@@ -102,16 +100,32 @@
         </LinearLayout>
 
         <!-- Button for Post -->
-        <Button
-            android:id="@+id/buttonPost"
-            android:layout_width="159dp"
-            android:layout_height="82dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="16dp"
-            android:text="Post" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/buttonUpdate"
+                android:layout_width="126dp"
+                android:layout_height="72dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="16dp"
+                android:text="@string/update" />
 
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/buttonDelete"
+                android:layout_width="128dp"
+                android:layout_height="70dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="16dp"
+                android:text="Delete" />
+
+
+        </LinearLayout>
+
 
     <include
         layout="@layout/bottom_toolbar"
@@ -124,3 +138,4 @@
 
 </LinearLayout>
 
+</LinearLayout>

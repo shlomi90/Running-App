@@ -24,4 +24,15 @@
     <string name="email1">Email</string>
     <string name="plus">+</string>
     <string name="api1">API</string>
+    <string name="upload_photo">Upload Photo</string>
+    <string name="location">Location</string>
+    <string name="choose_time">Choose Time</string>
+    <string name="content">Content</string>
+    <string name="post">Post</string>
+    <string name="profile_image">profile_image</string>
+    <string name="select_image">select_image</string>
+    <string name="your_phone" />
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="update">Update</string>
 </resources>

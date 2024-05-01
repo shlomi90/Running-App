@@ -10,15 +10,17 @@
     android:padding="15dp"
     tools:context=".Register">
 
+    <!-- Title -->
     <TextView
         android:text="@string/register"
         android:textSize="40sp"
         android:textStyle="bold"
         android:gravity="center"
         android:layout_marginBottom="20dp"
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
+    <!-- Email -->
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -27,9 +29,9 @@
             android:hint="@string/email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-
     </com.google.android.material.textfield.TextInputLayout>
 
+    <!-- Password -->
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -40,6 +42,7 @@
             android:layout_height="wrap_content"/>
     </com.google.android.material.textfield.TextInputLayout>
 
+    <!-- Name -->
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -50,6 +53,7 @@
             android:layout_height="wrap_content"/>
     </com.google.android.material.textfield.TextInputLayout>
 
+    <!-- Age -->
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -58,32 +62,53 @@
             android:hint="@string/your_age"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-
     </com.google.android.material.textfield.TextInputLayout>
-
-
+    <!-- phone -->
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/profile_picture"
-            android:hint="@string/profile_picture_url"
+            android:id="@+id/phone"
+            android:hint="Your phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </com.google.android.material.textfield.TextInputLayout>
 
 
+    <!-- Profile Picture ImageView -->
+    <ImageView
+        android:id="@+id/imageViewProfile"
+        android:layout_width="106dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:contentDescription="@string/profile_image"
+        android:src="@drawable/default_profile_image" />
+
+    <!-- Button for selecting image -->
+    <Button
+        android:id="@+id/buttonSelectImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/select_image"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp" />
+
+    <!-- Progress Bar -->
     <ProgressBar
         android:id="@+id/progressBar"
         android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
+    <!-- Register Button -->
     <Button
         android:id="@+id/btn_register"
         android:text="@string/register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+
+    <!-- TextView for Login -->
     <TextView
         android:textStyle="bold"
         android:textSize="20sp"
@@ -93,8 +118,5 @@
         android:text="@string/click_to_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-
-
-
 
 </LinearLayout>

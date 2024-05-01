@@ -9,17 +9,18 @@
     android:background="@drawable/background"
     tools:context=".MainActivity">
 
-    <!-- User Details TextView -->
-    <TextView
-        android:id="@+id/user_details"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
-        android:textSize="20sp"
-        android:textStyle="bold" />
 
     <!-- Logout Button -->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="372dp"
+        android:layout_height="388dp"
+        android:layout_above="@id/bottom_toolbar"
+        android:layout_below="@id/logout"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="107dp" />
+
     <Button
         android:id="@+id/logout"
         android:layout_width="wrap_content"
@@ -36,7 +37,8 @@
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="16dp"
-        android:text="@string/api1" />
+        android:text="@string/api1"
+        tools:ignore="RelativeOverlap" />
 
     <!-- "+" Button -->
     <Button
@@ -64,7 +66,7 @@
             android:id="@+id/bottom_navigation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:menu="@menu/bottom_navigation_menu" />
+            app:menu="@menu/bottom_menu" />
     </LinearLayout>
 
 </RelativeLayout>
