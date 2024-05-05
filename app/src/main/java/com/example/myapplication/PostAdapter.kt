@@ -2,6 +2,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.EditPostActivity
+import com.example.myapplication.MainActivity
+import com.example.myapplication.ParticipantsDialog
 import com.example.myapplication.Post
 import com.example.myapplication.R
 import com.example.myapplication.User
@@ -155,6 +158,13 @@ class PostAdapter(
                 holder.itemView.context.startActivity(intent)
             }
 
+
+        }
+
+        holder.ParticepatePostsButton.setOnClickListener {
+            val participants= currentItem.participants
+            val dialog = ParticipantsDialog.newInstance(participants)
+            dialog.show((holder.itemView.context as MainActivity).supportFragmentManager, "ParticipantsDialog")
 
         }
 

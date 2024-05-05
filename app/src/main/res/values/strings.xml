@@ -35,4 +35,8 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="update">Update</string>
+    <string name="close_button_text" />
+    <string name="participants_title" />
+    <string name="participants_icon_description" />
+    <string name="Participents">Participants</string>
 </resources>
