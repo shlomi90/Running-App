@@ -58,6 +58,34 @@ class EditPostActivity : AppCompatActivity() {
         deleteButton = findViewById(R.id.buttonDelete)
         updateButton = findViewById(R.id.buttonUpdate)
 
+
+        val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottom_navigation)
+        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.profile -> {
+                    val intent = Intent(this@EditPostActivity, ProfileActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                    true
+                }
+                R.id.posts -> {
+                    // Replace MainActivity with your desired activity for the "posts" button
+                    val intent = Intent(this@EditPostActivity, YourPosts::class.java)
+                    startActivity(intent)
+                    finish()
+                    true
+                }
+                R.id.homep -> {
+                    // Always navigate to MainActivity when "home" button is clicked
+                    val intent = Intent(this@EditPostActivity, MainActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                    true
+                }
+                else -> false
+            }
+        }
+
         // Retrieve post details from intent extras
         val postId = intent.getStringExtra("postId")
         Log.d("EditPostActivity", "postKey: $postId")

@@ -34,6 +34,8 @@ class Register : AppCompatActivity() {
     private lateinit var progressBar: ProgressBar
     private var selectedImageUri: Uri? = null
     private lateinit var storageReference: StorageReference
+    private lateinit var textView: TextView
+
 
     companion object {
         private const val IMAGE_PICK_REQUEST_CODE = 1001
@@ -52,17 +54,23 @@ class Register : AppCompatActivity() {
         editTextAge = findViewById(R.id.age)
         editTextPhone = findViewById(R.id.phone)
         imageViewProfile = findViewById(R.id.imageViewProfile)
-        buttonSelectImage = findViewById(R.id.buttonSelectImage)
         editTextName = findViewById(R.id.name)
         buttonReg = findViewById(R.id.btn_register)
-        progressBar = findViewById(R.id.progressBar)
+        progressBar = findViewById(R.id.progressBarRegister)
+        textView=findViewById(R.id.loginNow)
 
-        buttonSelectImage.setOnClickListener {
+        imageViewProfile.setOnClickListener {
             selectImage()
         }
 
         buttonReg.setOnClickListener {
             registerUser()
+        }
+
+        textView.setOnClickListener {
+            val intent = Intent(applicationContext, Login::class.java)
+            startActivity(intent)
+            finish()
         }
     }
 
@@ -145,6 +153,9 @@ class Register : AppCompatActivity() {
                         .addOnSuccessListener {
                             Toast.makeText(
                                 baseContext, "Account created successfully.", Toast.LENGTH_SHORT
+                            ).show()
+                            Toast.makeText(
+                                baseContext, "Welcome, ${user?.displayName}", Toast.LENGTH_SHORT
                             ).show()
                             val intent = Intent(applicationContext, MainActivity::class.java)
                             startActivity(intent)

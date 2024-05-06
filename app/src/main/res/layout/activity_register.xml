@@ -74,7 +74,12 @@
             android:layout_height="wrap_content"/>
     </com.google.android.material.textfield.TextInputLayout>
 
-
+    <!-- Progress Bar -->
+    <ProgressBar
+        android:id="@+id/progressBarRegister"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
     <!-- Profile Picture ImageView -->
     <ImageView
         android:id="@+id/imageViewProfile"
@@ -86,20 +91,15 @@
         android:src="@drawable/default_profile_image" />
 
     <!-- Button for selecting image -->
-    <Button
-        android:id="@+id/buttonSelectImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/select_image"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp" />
+<!--    <Button-->
+<!--        android:id="@+id/buttonSelectImage"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="@string/select_image"-->
+<!--        android:layout_gravity="center_horizontal"-->
+<!--        android:layout_marginTop="20dp" />-->
 
-    <!-- Progress Bar -->
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+
 
     <!-- Register Button -->
     <Button
