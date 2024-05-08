@@ -20,9 +20,7 @@ import com.google.firebase.database.*
 class MainActivity : AppCompatActivity() {
 
     private lateinit var buttonLogout: Button
-    private lateinit var buttonApi: Button
     private lateinit var addPost: Button
-
     private lateinit var auth: FirebaseAuth
     private lateinit var recyclerView: RecyclerView
     private lateinit var postAdapter: PostAdapter
@@ -43,7 +41,6 @@ class MainActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         currentUser = auth.currentUser
         buttonLogout = findViewById(R.id.logout)
-        buttonApi = findViewById(R.id.api)
         addPost = findViewById(R.id.add_button)
 
         recyclerView = findViewById(R.id.recyclerView)
