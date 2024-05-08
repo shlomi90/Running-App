@@ -35,7 +35,7 @@ class YourPosts : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         postList = mutableListOf()
-        postAdapter = PostAdapter(postList, currentUser?.uid ?: "", FirebaseDatabase.getInstance())
+        postAdapter = PostAdapter(postList, currentUser?.uid ?: "", FirebaseDatabase.getInstance(), this)
         recyclerView.adapter = postAdapter
 
 

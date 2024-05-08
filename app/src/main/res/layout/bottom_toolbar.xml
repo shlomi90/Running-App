@@ -1,4 +1,6 @@
 <!-- bottom_navigation_layout.xml -->
+
+
 <com.google.android.material.bottomnavigation.BottomNavigationView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/bottom_navigation"
@@ -8,4 +10,5 @@
     app:itemTextColor="@color/black"
     app:menu="@menu/bottom_menu"
     app:labelVisibilityMode="labeled"
+
     android:background="?android:attr/windowBackground" />

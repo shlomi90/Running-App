@@ -1,9 +1,13 @@
 package com.example.myapplication
 
+import WeatherMapService
+import WeatherResponse
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.TimePickerDialog
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.health.connect.datatypes.ExerciseRoute
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -15,9 +19,13 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.android.volley.Response
 import com.example.myapplication.R.*
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.Autocomplete
@@ -27,18 +35,25 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
 
 class NewPost : AppCompatActivity() {
 
     private val AUTOCOMPLETE_REQUEST_CODE = 1
     private val IMAGE_REQUEST_CODE = 1001
-
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private val LOCATION_REQUEST_CODE = 1002
     private lateinit var imageViewPost: ImageView
     private lateinit var textViewLocation: TextView
     private lateinit var textViewTime: TextView
+
     private var selectedLocation: String = ""
     private var selectedHour: String = ""
+
     private var selectedImageUri: Uri? = null
     private lateinit var auth: FirebaseAuth
     private lateinit var database: FirebaseDatabase
@@ -60,6 +75,11 @@ class NewPost : AppCompatActivity() {
         imageViewPost = findViewById(id.imageViewPost)
         textViewLocation = findViewById(id.textViewLocation)
         textViewTime = findViewById(id.textViewTime)
+
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        requestLocationPermission()
+
 
         val buttonPost: Button = findViewById(id.buttonPost)
         buttonPost.setOnClickListener {
@@ -96,15 +116,78 @@ class NewPost : AppCompatActivity() {
         Places.initialize(applicationContext, "AIzaSyAz0mzKXT-CG3aYYDFsFqEAhQNMF1ILro4")
     }
 
+    private fun requestLocationPermission() {
+ActivityCompat.requestPermissions(
+            this,
+            arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
+            LOCATION_REQUEST_CODE
+        )
+    }
+
+    private fun getCurrentLocation() {
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return
+        }
+        fusedLocationClient.lastLocation
+            .addOnSuccessListener { location ->
+                if (location != null) {
+                    // Get the location details
+                    val latitude = location.latitude
+                    val longitude = location.longitude
+                    selectedLocation = "$latitude, $longitude"
+                    updateTextViews()
+                } else {
+                    // Location is null, handle accordingly
+                }
+            }
+            .addOnFailureListener { e ->
+                // Failed to get location
+                Log.e("Location", "Failed to get location: ${e.message}")
+            }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == LOCATION_REQUEST_CODE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission granted, get current location
+                getCurrentLocation()
+            } else {
+                // Permission denied, handle accordingly
+            }
+        }
+    }
+
+
     fun selectImage(view: View) {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "image/*"
         startActivityForResult(intent, IMAGE_REQUEST_CODE)
     }
 
+
+
     fun selectLocation(view: View) {
         // Set the fields to specify the types of place data to return
-        val fields = listOf(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS)
+        val fields = listOf(Place.Field.NAME, Place.Field.ADDRESS)
 
         // Start the autocomplete intent
         val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields)
@@ -141,7 +224,7 @@ class NewPost : AppCompatActivity() {
                         val place = Autocomplete.getPlaceFromIntent(data!!)
                         // Handle the selected place
                         // You can get place details like place.name, place.address, etc.
-                        selectedLocation = "${place.name}, ${place.address}"
+                        selectedLocation = " ${place.address}"
                         updateTextViews()
                     }
                     AutocompleteActivity.RESULT_ERROR -> {
@@ -160,6 +243,8 @@ class NewPost : AppCompatActivity() {
                     data?.data?.let { uri ->
                         selectedImageUri = uri
                         imageViewPost.setImageURI(uri)
+                        val textViewUploadPhoto = findViewById<TextView>(R.id.textViewUploadPhoto)
+                        textViewUploadPhoto.visibility = View.GONE
                     }
                 }
             }
@@ -180,6 +265,8 @@ class NewPost : AppCompatActivity() {
         }
     }
 
+
+
     private fun post() {
         val currentUser = auth.currentUser ?: return
 
@@ -194,6 +281,8 @@ class NewPost : AppCompatActivity() {
         val location = selectedLocation
         val time = selectedHour
         val imageUrl = selectedImageUri?.toString() ?: ""
+
+
 
 
         // Check if an image is selected
@@ -218,18 +307,14 @@ class NewPost : AppCompatActivity() {
                     // Image uploaded successfully, get the download URL
                     val downloadUri = task.result
 
-
                     // Get a reference to the user's posts node
                     val userPostsRef = database.reference.child("users").child(userId).child("posts")
-
 
                     // Generate a unique ID for the new post
                     val postId = userPostsRef.push().key ?: ""
 
                     // Create a Post object with the download URL
                     val post = Post(postId ,content, location, time, downloadUri.toString(),0, mutableListOf(userName.toString()),userId)
-
-
 
                     // Save the post to the user's posts node with the generated ID
                     userPostsRef.child(postId).setValue(post)
@@ -257,26 +342,9 @@ class NewPost : AppCompatActivity() {
                 }
             }
         } else {
-            // No image selected, create a Post object without the image URL
-            val post = Post(content, location, time, imageUrl)
-
-            // Get a reference to the user's posts node
-            val userPostsRef = database.reference.child("users").child(userId).child("posts")
-
-            // Generate a unique ID for the new post
-            val postId = userPostsRef.push().key ?: ""
-
-            // Save the post to the user's posts node with the generated ID
-            userPostsRef.child(postId).setValue(post)
-                .addOnSuccessListener {
-                    // Post saved successfully
-                    Toast.makeText(this@NewPost, "Post successful", Toast.LENGTH_SHORT).show()
-                }
-                .addOnFailureListener { e ->
                     // Failed to save post
-                    Toast.makeText(this@NewPost, "Failed to post: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@NewPost, "Failed to post", Toast.LENGTH_SHORT).show()
                 }
         }
     }
-}
 

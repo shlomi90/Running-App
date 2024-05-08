@@ -56,6 +56,18 @@ dependencies {
     implementation(libs.firebase.storage.ktx)
     implementation(libs.firebase.firestore.ktx)
     implementation(libs.androidx.recyclerview)
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+
+
+
+
+
+
+
+
+
+
     testImplementation(libs.junit)
 
     androidTestImplementation(libs.androidx.junit)

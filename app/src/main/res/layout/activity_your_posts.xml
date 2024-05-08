@@ -14,17 +14,24 @@
         android:id="@+id/recyclerViewYourPosts"
         android:layout_width="372dp"
         android:layout_height="388dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="120dp"
         android:layout_marginBottom="107dp" />
 
-    <include
+    <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
-        layout="@layout/bottom_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_marginTop="50dp"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:menu="@menu/bottom_menu" />
+
+    <LinearLayout
+        android:id="@+id/bottom_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+    </LinearLayout>
 
 
 </LinearLayout>

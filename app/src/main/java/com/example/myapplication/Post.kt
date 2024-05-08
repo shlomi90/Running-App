@@ -12,7 +12,9 @@ data class Post(
     var imageUrl: String = "",
     var numberOfParticipants: Int = 0,
     val participants: MutableList<String> = mutableListOf(),
-    val postCreator: String = ""
+    val postCreator: String = "",
+
+
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
@@ -23,6 +25,7 @@ data class Post(
         parcel.readInt(),
         parcel.createStringArrayList()!!,
         parcel.readString()!!
+
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {

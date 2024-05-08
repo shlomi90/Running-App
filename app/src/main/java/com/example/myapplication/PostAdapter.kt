@@ -1,8 +1,10 @@
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.telecom.Call
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -12,12 +14,17 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+
 import com.example.myapplication.EditPostActivity
 import com.example.myapplication.MainActivity
+
 import com.example.myapplication.ParticipantsDialog
 import com.example.myapplication.Post
 import com.example.myapplication.R
+
 import com.example.myapplication.User
+import com.example.myapplication.WeatherData
+
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -25,11 +32,15 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class PostAdapter(
     private val postList: List<Post>,
     private val currentUserId: String,
-    private val database: FirebaseDatabase
+    private val database: FirebaseDatabase,
+    private val context: Context
+
 ) : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
 
     inner class PostViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -40,6 +51,7 @@ class PostAdapter(
         val joinPostsButton: Button = itemView.findViewById(R.id.buttonJoin)
         val ParticepatePostsButton: Button = itemView.findViewById(R.id.buttonParticipants)
         val ContactButton: Button = itemView.findViewById(R.id.buttonContact)
+        val textViewWeather: TextView = itemView.findViewById(R.id.textViewWeather)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
@@ -51,6 +63,10 @@ class PostAdapter(
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
         val currentItem = postList[position]
         val postKey = currentItem.id
+
+
+
+
 
         holder.contentTextView.text = currentItem.content
         holder.timeTextView.text = currentItem.time
@@ -169,8 +185,56 @@ class PostAdapter(
         }
 
 
+        fetchWeatherData(currentItem.location) { weatherData ->
+            // Update the UI with weather data
+            holder.textViewWeather.text = " ${weatherData.temperature} °C,  ${weatherData.description}"
+        }
 
     }
+
+
+    private fun fetchWeatherData(location: String, onWeatherDataFetched: (WeatherData) -> Unit) {
+        val apiKey = "e4ba4d84ffb3f4d6d9d467cae6818f0e"
+        val parts = location.split(",")
+        val city = if (parts.size == 3) {
+            parts[1].trim()
+        } else {
+            parts[0].trim()
+        }
+        Log.d("Weather", "City: $city")
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://api.openweathermap.org/data/2.5/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        val service = retrofit.create(WeatherMapService::class.java)
+        val call = service.getWeather(city, apiKey)
+
+        call.enqueue(object : retrofit2.Callback<WeatherResponse> {
+            override fun onResponse(call: retrofit2.Call<WeatherResponse>, response: retrofit2.Response<WeatherResponse>) {
+                if (response.isSuccessful) {
+                    val weatherResponse = response.body()
+                    if (weatherResponse != null) {
+                        val temperatureKelvin = weatherResponse.main.temperature
+                        val temperatureCelsius = temperatureKelvin - 273.15 // Convert Kelvin to Celsius
+                        val formattedTemperature = String.format("%.1f", temperatureCelsius) // Format temperature to one decimal point
+                        val description = weatherResponse.weather.firstOrNull()?.description ?: "N/A"
+                        // Create a WeatherData object with formatted temperature and description
+                        val weatherData = WeatherData(formattedTemperature.toDouble(), description)
+                        // Invoke the callback with the weather data
+                        onWeatherDataFetched(weatherData)
+                    }
+                } else {
+                    Log.e("Weather", "Failed to fetch weather data: ${response.errorBody()}")
+                }
+            }
+
+            override fun onFailure(call: retrofit2.Call<WeatherResponse>, t: Throwable) {
+                Log.e("Weather", "Failed to fetch weather data: ${t.message}")
+            }
+        })
+    }
+
 
     override fun getItemCount() = postList.size
 
@@ -191,4 +255,6 @@ class PostAdapter(
             Toast.makeText(context, "WhatsApp is not installed", Toast.LENGTH_SHORT).show()
         }
     }
+
+
 }
