@@ -34,6 +34,9 @@ RunMate allows users to create and join running events, making it easy to find r
 5. Edit your events or profile as needed
 
 ## Screenshots
+![login](https://raw.githubusercontent.com/shlomi90/Running-App/master/login.png)
+![post](https://raw.githubusercontent.com/shlomi90/Running-App/master/post.png)
+![dashboard](https://raw.githubusercontent.com/shlomi90/Running-App/master/dashboard.png)
 
 
 
